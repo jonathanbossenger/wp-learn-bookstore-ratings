@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Bookstore & Ratings
- * Description: A bookstore management plugin
+ * Description: A bookstore management and rating plugin
  * Version: 1.0.0
  * Author: Jonathan Bossenger
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wp-learn-bookstore
+ * Text Domain: wp-learn-bookstore-ratings
  * Domain Path: /languages
  *
  * @package WP_Learn_Bookstore
@@ -30,7 +30,7 @@ define( 'WP_LEARN_BOOKSTORE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  */
 function wp_learn_get_template_content( $template ) {
 	ob_start();
-	include __DIR__ . "/templates/{$template}";
+	include $template;
 	return ob_get_clean();
 }
 
@@ -72,7 +72,7 @@ add_action( 'wp_enqueue_scripts', 'wp_learn_bookstore_enqueue_scripts' );
 function wp_learn_bookstore_enqueue_scripts() {
 	if ( is_singular( 'book' ) ) {
 		wp_enqueue_script(
-			'wp-learn-bookstore-rating',
+			'wp-learn-bookstore-ratings',
 			plugins_url( 'js/book-rating.js', __FILE__ ),
 			array( 'wp-api-fetch' ),
 			WP_LEARN_BOOKSTORE_VERSION,
@@ -80,7 +80,7 @@ function wp_learn_bookstore_enqueue_scripts() {
 		);
 
 		wp_enqueue_style(
-			'wp-learn-bookstore-rating',
+			'wp-learn-bookstore-ratings',
 			plugins_url( 'css/book-rating.css', __FILE__ ),
 			array(),
 			WP_LEARN_BOOKSTORE_VERSION
@@ -100,13 +100,13 @@ function wp_learn_bookstore_init() {
 		'book',
 		array(
 			'labels'       => array(
-				'name'          => __( 'Books', 'wp-learn-bookstore' ),
-				'singular_name' => __( 'Book', 'wp-learn-bookstore' ),
-				'add_new'       => __( 'Add New Book', 'wp-learn-bookstore' ),
-				'add_new_item'  => __( 'Add New Book', 'wp-learn-bookstore' ),
-				'edit_item'     => __( 'Edit Book', 'wp-learn-bookstore' ),
-				'view_item'     => __( 'View Book', 'wp-learn-bookstore' ),
-				'all_items'     => __( 'All Books', 'wp-learn-bookstore' ),
+				'name'          => __( 'Books', 'wp-learn-bookstore-ratings' ),
+				'singular_name' => __( 'Book', 'wp-learn-bookstore-ratings' ),
+				'add_new'       => __( 'Add New Book', 'wp-learn-bookstore-ratings' ),
+				'add_new_item'  => __( 'Add New Book', 'wp-learn-bookstore-ratings' ),
+				'edit_item'     => __( 'Edit Book', 'wp-learn-bookstore-ratings' ),
+				'view_item'     => __( 'View Book', 'wp-learn-bookstore-ratings' ),
+				'all_items'     => __( 'All Books', 'wp-learn-bookstore-ratings' ),
 			),
 			'public'       => true,
 			'has_archive'  => true,
@@ -137,7 +137,7 @@ function wp_learn_bookstore_register_meta() {
 		'isbn',
 		array(
 			'type'         => 'string',
-			'description'  => __( 'Book ISBN number', 'wp-learn-bookstore' ),
+			'description'  => __( 'Book ISBN number', 'wp-learn-bookstore-ratings' ),
 			'single'       => true,
 			'show_in_rest' => true,
 		)
@@ -164,17 +164,17 @@ add_action( 'init', 'wp_learn_bookstore_register_templates' );
  * Register block templates for the book post type
  */
 function wp_learn_bookstore_register_templates() {
-	$template_file = WP_LEARN_BOOKSTORE_PLUGIN_DIR . 'templates/single-book.html';
+	$template_file = WP_LEARN_BOOKSTORE_PLUGIN_DIR . 'templates/single-book.php';
 
 	if ( ! file_exists( $template_file ) ) {
 		return;
 	}
 
 	register_block_template(
-		'wp-learn-bookstore//single-book',
+		'wp-learn-bookstore-ratings//single-book',
 		array(
-			'title'       => __( 'Single Book', 'wp-learn-bookstore' ),
-			'description' => __( 'Template for displaying a single book.', 'wp-learn-bookstore' ),
+			'title'       => __( 'Single Book', 'wp-learn-bookstore-ratings' ),
+			'description' => __( 'Template for displaying a single book.', 'wp-learn-bookstore-ratings' ),
 			'content'     => wp_learn_get_template_content( $template_file ),
 		)
 	);
@@ -188,7 +188,7 @@ add_action( 'rest_api_init', 'wp_learn_bookstore_register_rest_routes' );
  */
 function wp_learn_bookstore_register_rest_routes() {
 	register_rest_route(
-		'wp-learn-bookstore/v1',
+		'wp-learn-bookstore-ratings/v1',
 		'/books/(?P<book_id>\d+)/ratings',
 		array(
 			array(
@@ -236,7 +236,7 @@ function wp_learn_bookstore_get_book_ratings( $request ) {
 	if ( 'book' !== get_post_type( $book_id ) ) {
 		return new WP_Error(
 			'invalid_book_id',
-			__( 'Invalid book ID.', 'wp-learn-bookstore' ),
+			__( 'Invalid book ID.', 'wp-learn-bookstore-ratings' ),
 			array( 'status' => 404 )
 		);
 	}
@@ -265,7 +265,7 @@ function wp_learn_bookstore_create_book_rating( $request ) {
 	if ( 'book' !== get_post_type( $book_id ) ) {
 		return new WP_Error(
 			'invalid_book_id',
-			__( 'Invalid book ID.', 'wp-learn-bookstore' ),
+			__( 'Invalid book ID.', 'wp-learn-bookstore-ratings' ),
 			array( 'status' => 404 )
 		);
 	}
@@ -284,7 +284,7 @@ function wp_learn_bookstore_create_book_rating( $request ) {
 	if ( false === $result ) {
 		return new WP_Error(
 			'rating_creation_failed',
-			__( 'Failed to create rating.', 'wp-learn-bookstore' ),
+			__( 'Failed to create rating.', 'wp-learn-bookstore-ratings' ),
 			array( 'status' => 500 )
 		);
 	}
@@ -307,36 +307,36 @@ add_action( 'init', 'wp_learn_bookstore_register_block_patterns' );
  */
 function wp_learn_bookstore_register_block_patterns() {
 	register_block_pattern(
-		'wp-learn-bookstore/book-rating',
+		'wp-learn-bookstore-ratings/book-rating',
 		array(
-			'title'       => __( 'Book Rating Stars', 'wp-learn-bookstore' ),
-			'description' => __( 'Displays clickable star ratings for books', 'wp-learn-bookstore' ),
+			'title'       => __( 'Book Rating Stars', 'wp-learn-bookstore-ratings' ),
+			'description' => __( 'Displays clickable star ratings for books', 'wp-learn-bookstore-ratings' ),
 			'content'     => '
-				<!-- wp:group {"className":"book-rating-stars","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+				<!-- wp:group {"className":"book-rating-stars","layout":{"type":"flex","flexWrap":"nowrap,"justifyContent":"center"}} -->
 				<div class="wp-block-group book-rating-stars">
 					<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 					<div class="wp-block-buttons">
 						<!-- wp:button {"className":"rating-star"} -->
-						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#" data-rating="1">★</a></div>
+						<div class="wp-block-button rating-star"><a data-rating="1" class="wp-block-button__link wp-element-button" href="#">★</a></div>
 						<!-- /wp:button -->
 						<!-- wp:button {"className":"rating-star"} -->
-						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#" data-rating="2">★</a></div>
+						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#">★</a></div>
 						<!-- /wp:button -->
 						<!-- wp:button {"className":"rating-star"} -->
-						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#" data-rating="3">★</a></div>
+						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#">★</a></div>
 						<!-- /wp:button -->
 						<!-- wp:button {"className":"rating-star"} -->
-						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#" data-rating="4">★</a></div>
+						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#">★</a></div>
 						<!-- /wp:button -->
 						<!-- wp:button {"className":"rating-star"} -->
-						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#" data-rating="5">★</a></div>
+						<div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#">★</a></div>
 						<!-- /wp:button -->
 					</div>
 					<!-- /wp:buttons -->
 				</div>
 				<!-- /wp:group -->
 			',
-			'categories'  => array( 'buttons' ),
+			'categories'  => array( 'uncategorized' ),
 			'keywords'    => array( 'rating', 'stars', 'book' ),
 		)
 	);

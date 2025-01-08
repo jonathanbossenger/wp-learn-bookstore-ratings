@@ -14,11 +14,25 @@
             <p class="book-isbn">ISBN: </p>
             <!-- /wp:paragraph -->
             
-            <!-- wp:post-custom-field {"key":"isbn"} /-->
+            <!-- wp:paragraph {
+                "metadata":{
+                    "bindings":{
+                        "content":{
+                            "source":"core/post-meta",
+                            "args":{
+                                "key":"isbn"
+                            }
+                        }
+                    }
+                }
+            } -->
+            <p></p>
+            <!-- /wp:paragraph -->
         </div>
         <!-- /wp:group -->
         
         <!-- wp:post-content {"layout":{"inherit":true}} /-->
+         
     </div>
     <!-- /wp:group -->
 </main>

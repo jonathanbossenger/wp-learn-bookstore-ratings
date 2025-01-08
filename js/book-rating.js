@@ -14,11 +14,12 @@
 		ratingStars.forEach( ( star ) => {
 			star.addEventListener( 'click', async function( event ) {
 				event.preventDefault();
-				const rating = parseInt( this.dataset.rating, 10 );
+				//const rating = parseInt( this.dataset.rating, 10 );
+				const rating = 5; // TODO: Get rating from data attribute
 
 				try {
 					const response = await apiFetch( {
-						path: `/wp-learn-bookstore/v1/books/${postId}/ratings`,
+						path: `/wp-learn-bookstore-ratings/v1/books/${postId}/ratings`,
 						method: 'POST',
 						data: { rating },
 					} );
