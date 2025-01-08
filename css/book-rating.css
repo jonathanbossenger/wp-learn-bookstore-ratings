@@ -1,0 +1,7 @@
+.book-rating-stars .rating-star a {
+	text-decoration: none;
+}
+
+.book-rating-stars .rating-star a.rated {
+	color: #FFD700;
+} 
