@@ -4,7 +4,7 @@
 <main class="wp-block-group">
     <!-- wp:group {"layout":{"type":"constrained"}} -->
     <div class="wp-block-group">
-        <!-- wp:post-featured-image {"align":"wide"} /-->
+        <!-- wp:post-featured-image /-->
         
         <!-- wp:post-title {"level":1,"align":"wide"} /-->
         
