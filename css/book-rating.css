@@ -4,4 +4,29 @@
 
 .book-rating-stars .rating-star a.rated {
 	color: #FFD700;
+}
+
+.rating-message {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.rating-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.rating-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.rating-message.saving {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
 } 

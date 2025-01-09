@@ -32,7 +32,35 @@
         <!-- /wp:group -->
         
         <!-- wp:post-content {"layout":{"inherit":true}} /-->
-         
+
+        <!-- wp:group {"className":"book-rating-stars","layout":{"type":"flex","flexWrap":"nowrap,"justifyContent":"center"}} -->
+            <div class="wp-block-group book-rating-stars">
+                <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+                <div class="wp-block-buttons">
+                    <!-- wp:button {"className":"rating-star"} -->
+                    <div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#"><span data-rating="1">★</span></a></div>
+                    <!-- /wp:button -->
+                    <!-- wp:button {"className":"rating-star"} -->
+                    <div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#"><span data-rating="2">★</span></a></div>
+                    <!-- /wp:button -->
+                    <!-- wp:button {"className":"rating-star"} -->
+                    <div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#"><span data-rating="3">★</span></a></div>
+                    <!-- /wp:button -->
+                    <!-- wp:button {"className":"rating-star"} -->
+                    <div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#"><span data-rating="4">★</span></a></div>
+                    <!-- /wp:button -->
+                    <!-- wp:button {"className":"rating-star"} -->
+                    <div class="wp-block-button rating-star"><a class="wp-block-button__link wp-element-button" href="#"><span data-rating="5">★</span></a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:buttons -->
+                <!-- wp:paragraph {"className":"rating-message","style":{"display":"none"}} -->
+                <p class="rating-message"></p>
+                <!-- /wp:paragraph -->
+            </div>
+        <!-- /wp:group -->
+        
+
     </div>
     <!-- /wp:group -->
 </main>
