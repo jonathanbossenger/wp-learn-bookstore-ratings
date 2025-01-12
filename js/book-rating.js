@@ -18,7 +18,6 @@
 				const ratingSpan = this.querySelector( 'span' );
 				const rating = parseInt( ratingSpan.dataset.rating );
 
-				// Show saving message immediately
 				messageEl.textContent = 'Saving your rating...';
 				messageEl.style.display = 'block';
 				messageEl.classList.add( 'saving' );
@@ -31,7 +30,6 @@
 					} );
 
 					if ( response ) {
-						// Update UI to show the rating was successful
 						ratingButtons.forEach( btn => {
 							const btnSpan = btn.querySelector( 'span' );
 							const btnRating = parseInt( btnSpan.dataset.rating );
@@ -42,14 +40,12 @@
 							}
 						} );
 
-						// Remove saving class and show success message
 						messageEl.classList.remove( 'saving' );
 						messageEl.textContent = `Thanks! You rated this book ${rating} stars.`;
 						messageEl.classList.add( 'success' );
 					}
 				} catch ( error ) {
 					console.error( 'Error submitting rating:', error );
-					// Remove saving class and show error message
 					messageEl.classList.remove( 'saving' );
 					messageEl.textContent = 'Sorry, there was an error saving your rating. Please try again.';
 					messageEl.classList.add( 'error' );
