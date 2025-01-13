@@ -31,7 +31,7 @@ function wplbr_activate() {
 	global $wpdb;
 
 	$charset_collate = $wpdb->get_charset_collate();
-	$table_name      = $wpdb->prefix . 'bookstore_ratings';
+	$table_name = $wpdb->prefix . 'bookstore_ratings';
 
 	$sql = "CREATE TABLE $table_name (
 		id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -75,10 +75,10 @@ function wplbr_register_book_post_type() {
 	);
 
 	$args = array(
-		'labels'       => $labels,
-		'public'       => true,
-		'show_in_rest' => true,
-		'supports'     => array(
+		'labels'          => $labels,
+		'public'          => true,
+		'show_in_rest'    => true,
+		'supports'        => array(
 			'title',
 			'editor',
 			'thumbnail',
@@ -189,3 +189,21 @@ function wplbr_enqueue_assets() {
 		);
 	}
 }
+
+add_action( 'init', 'wplbr_register_pattern_source' );
+/**
+ * Register pattern source for ratings UI.
+ *
+ * @return void
+ */
+function wplbr_register_pattern_source() {
+	require_once plugin_dir_path( __FILE__ ) . 'inc/class-wplbr-pattern-source.php';
+	register_block_pattern_source(
+		'wp-learn-bookstore-ratings/rating-ui',
+		array(
+			'label'    => __( 'Rating UI', 'wp-learn-bookstore-ratings' ),
+			'callback' => array( 'WPLBR_Pattern_Source', 'get_rating_ui' ),
+		)
+	);
+} 
+

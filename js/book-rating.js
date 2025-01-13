@@ -1,15 +1,30 @@
 ( function() {
 	const { apiFetch } = wp;
 
-	document.addEventListener( 'DOMContentLoaded', function() {
+	document.addEventListener( 'DOMContentLoaded', async function() {
 		const ratingButtons = document.querySelectorAll( '.rating-star a' );
 		const messageEl = document.querySelector( '.rating-message' );
+		const averageRatingEl = document.querySelector( '.average-rating' );
 		const postId = document.querySelector( 'body' ).classList
 			.toString()
 			.match( /postid-(\d+)/ )?.[1];
 
 		if ( ! postId ) {
 			return;
+		}
+
+		// Fetch and display the average rating
+		try {
+			const response = await apiFetch( {
+				path: `/wp-learn-bookstore-ratings/v1/books/${postId}/ratings`,
+				method: 'GET'
+			} );
+
+			if ( response && response.rating ) {
+				averageRatingEl.textContent = `Average rating: ${response.rating} ★`;
+			}
+		} catch ( error ) {
+			console.error( 'Error fetching average rating:', error );
 		}
 
 		ratingButtons.forEach( button => {

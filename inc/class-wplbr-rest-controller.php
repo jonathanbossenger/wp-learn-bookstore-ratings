@@ -60,7 +60,7 @@ class WPLBR_REST_Controller extends WP_REST_Controller {
 	public function get_rating( $request ) {
 		global $wpdb;
 
-		$book_id    = $request['book_id'];
+		$book_id = $request['book_id'];
 		$table_name = $wpdb->prefix . 'bookstore_ratings';
 
 		$average = $wpdb->get_var(
@@ -82,9 +82,9 @@ class WPLBR_REST_Controller extends WP_REST_Controller {
 	public function create_rating( $request ) {
 		global $wpdb;
 
-		$book_id    = $request['book_id'];
-		$user_id    = get_current_user_id();
-		$rating     = $request['rating'];
+		$book_id = $request['book_id'];
+		$user_id = get_current_user_id();
+		$rating = $request['rating'];
 		$table_name = $wpdb->prefix . 'bookstore_ratings';
 
 		// Update existing rating or insert new one.
@@ -126,4 +126,4 @@ class WPLBR_REST_Controller extends WP_REST_Controller {
 
 		return true;
 	}
-}
+} 

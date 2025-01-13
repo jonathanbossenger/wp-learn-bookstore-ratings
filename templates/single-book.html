@@ -12,9 +12,13 @@
 			<!-- wp:heading {"level":3} -->
 			<h3>ISBN</h3>
 			<!-- /wp:heading -->
-			<!-- wp:post-custom-field {"key":"wplb_isbn"} /-->
+			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"meta","args":{"key":"wplb_isbn"}}}}} -->
+			<p>ISBN Number. The value of this paragraph comes from a block binding and will be replaced at render.</p>
+			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->
+
+		<!-- wp:pattern {"source":"wp-learn-bookstore-ratings/rating-ui"} /-->
 
 		<!-- wp:post-content {"align":"full","layout":{"type":"constrained"}} /-->
 		<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
