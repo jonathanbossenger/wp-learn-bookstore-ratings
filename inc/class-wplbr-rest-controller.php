@@ -70,7 +70,7 @@ class WPLBR_REST_Controller extends WP_REST_Controller {
 			)
 		);
 
-		return rest_ensure_response( array( 'rating' => (float) $average ) );
+		return rest_ensure_response( array( 'average_rating' => (float) $average ) );
 	}
 
 	/**
@@ -106,7 +106,20 @@ class WPLBR_REST_Controller extends WP_REST_Controller {
 			);
 		}
 
-		return rest_ensure_response( array( 'success' => true ) );
+		// Get the new average rating.
+		$average = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT ROUND(AVG(rating), 1) FROM ' . $wpdb->prefix . 'bookstore_ratings WHERE book_id = %d',
+				$book_id
+			)
+		);
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+				'average_rating' => (float) $average,
+			)
+		);
 	}
 
 	/**

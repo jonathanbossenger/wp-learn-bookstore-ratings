@@ -213,6 +213,10 @@ function wplbr_register_rating_pattern() {
 			'description' => _x( 'Interactive star rating interface for books', 'Block pattern description', 'wp-learn-bookstore-ratings' ),
 			'content'     => '<!-- wp:group {"className":"book-rating-container"} -->
 <div class="wp-block-group book-rating-container">
+	<!-- wp:paragraph {"className":"average-rating"} -->
+	<p class="average-rating"></p>
+	<!-- /wp:paragraph -->
+
 	<!-- wp:paragraph {"className":"rating-message"} -->
 	<p class="rating-message"></p>
 	<!-- /wp:paragraph -->

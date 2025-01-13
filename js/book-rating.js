@@ -2,7 +2,7 @@
 	const { apiFetch } = wp;
 
 	document.addEventListener( 'DOMContentLoaded', async function() {
-		const ratingButtons = document.querySelectorAll( '.rating-star a' );
+		const ratingButtons = document.querySelectorAll( '.rating-buttons .wp-block-button button' );
 		const messageEl = document.querySelector( '.rating-message' );
 		const averageRatingEl = document.querySelector( '.average-rating' );
 		const postId = document.querySelector( 'body' ).classList
@@ -20,8 +20,9 @@
 				method: 'GET'
 			} );
 
-			if ( response && response.rating ) {
-				averageRatingEl.textContent = `Average rating: ${response.rating} ★`;
+			if ( response && response.average_rating ) {
+				averageRatingEl.textContent = `Average rating: ${response.average_rating} ★`;
+				averageRatingEl.style.display = 'block';
 			}
 		} catch ( error ) {
 			console.error( 'Error fetching average rating:', error );
@@ -45,6 +46,12 @@
 					} );
 
 					if ( response ) {
+						// Update the average rating display if it's returned in the response
+						if ( response.average_rating ) {
+							averageRatingEl.textContent = `Average rating: ${response.average_rating} ★`;
+							averageRatingEl.style.display = 'block';
+						}
+
 						ratingButtons.forEach( btn => {
 							const btnSpan = btn.querySelector( 'span' );
 							const btnRating = parseInt( btnSpan.dataset.rating );
