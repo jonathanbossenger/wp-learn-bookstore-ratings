@@ -190,20 +190,50 @@ function wplbr_enqueue_assets() {
 	}
 }
 
-add_action( 'init', 'wplbr_register_pattern_source' );
+add_action( 'init', 'wplbr_register_rating_pattern' );
 /**
- * Register pattern source for ratings UI.
+ * Register rating UI pattern.
  *
  * @return void
  */
-function wplbr_register_pattern_source() {
-	require_once plugin_dir_path( __FILE__ ) . 'inc/class-wplbr-pattern-source.php';
-	register_block_pattern_source(
+function wplbr_register_rating_pattern() {
+	// Only register the pattern if user is logged in.
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	register_block_pattern(
 		'wp-learn-bookstore-ratings/rating-ui',
 		array(
-			'label'    => __( 'Rating UI', 'wp-learn-bookstore-ratings' ),
-			'callback' => array( 'WPLBR_Pattern_Source', 'get_rating_ui' ),
+			'title'       => __( 'Book Rating UI', 'wp-learn-bookstore-ratings' ),
+			'description' => _x( 'Interactive star rating interface for books', 'Block pattern description', 'wp-learn-bookstore-ratings' ),
+			'content'     => '<!-- wp:group {"className":"book-rating-container"} -->
+<div class="wp-block-group book-rating-container">
+	<!-- wp:paragraph {"className":"rating-message"} -->
+	<p class="rating-message"></p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:buttons {"className":"rating-buttons"} -->
+	<div class="wp-block-buttons rating-buttons">
+		<!-- wp:button -->
+		<div class="wp-block-button"><button class="wp-block-button__link rating-1"><span data-rating="1">★</span></button></div>
+		<!-- /wp:button -->
+		<!-- wp:button -->
+		<div class="wp-block-button"><button class="wp-block-button__link rating-2"><span data-rating="2">★</span></button></div>
+		<!-- /wp:button -->
+		<!-- wp:button -->
+		<div class="wp-block-button"><button class="wp-block-button__link rating-3"><span data-rating="3">★</span></button></div>
+		<!-- /wp:button -->
+		<!-- wp:button -->
+		<div class="wp-block-button"><button class="wp-block-button__link rating-4"><span data-rating="4">★</span></button></div>
+		<!-- /wp:button -->
+		<!-- wp:button -->
+		<div class="wp-block-button"><button class="wp-block-button__link rating-5"><span data-rating="5">★</span></button></div>
+		<!-- /wp:button -->
+	</div>
+	<!-- /wp:buttons -->
+</div>
+<!-- /wp:group -->',
 		)
 	);
-} 
-
+}
