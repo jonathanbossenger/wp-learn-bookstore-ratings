@@ -98,6 +98,10 @@ add_filter( 'postmeta_form_keys', 'wplbr_register_book_custom_field_key', 10, 2 
  * @return array Modified array of custom field keys.
  */
 function wplbr_register_book_custom_field_key( $keys, $post_id ) {
+	if ( ! is_array( $keys ) ) {
+		$keys = array();
+	}
+
 	if ( 'book' === get_post_type( $post_id ) ) {
 		if ( ! in_array( 'wplb_isbn', $keys, true ) ) {
 			$keys[] = 'wplb_isbn';
